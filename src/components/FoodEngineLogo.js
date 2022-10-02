@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
 
 const FoodEngineLogo = () => {
-  return (
-    <div>FoodEngineLogo</div>
-  )
-}
+    return (
+        <>
+            <div>
+                <img src="/logo192.png" alt="bimbimbap" />
+                hello
+            </div>
+        </>
+    );
+};
 
-export default FoodEngineLogo
+export default FoodEngineLogo;
