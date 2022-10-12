@@ -6,7 +6,7 @@ import "./../../src/index.css";
 const Login = () => {
     return (
         <>
-            <div className="LoginContainer">
+            <div className="LoginContainer home">
                 <FoodEngineLogo />
                 <LoginHome />
             </div>

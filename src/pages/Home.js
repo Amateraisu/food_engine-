@@ -3,7 +3,7 @@ import Login from "./Login";
 
 const Home = () => {
     return (
-        <div className="App">
+        <div className="App home">
             <Login />
 
             <style jsx="true">
