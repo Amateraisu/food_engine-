@@ -1,6 +1,7 @@
 import React from "react";
 import FoodEngineLogo from "./../components/FoodEngineLogo";
 import LoginHome from "./../components/LoginHome";
+import "./../../src/index.css";
 
 const Login = () => {
     return (
