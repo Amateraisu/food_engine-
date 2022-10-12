@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
+import { Link } from "react-router-dom";
 
 const LoginHome = () => {
     const [didError, setDidError] = useState(false);
@@ -11,18 +13,19 @@ const LoginHome = () => {
         const email = event.target[0].value;
         const password = event.target[1].value;
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in
-                const user = userCredential.user;
-                console.log("my user", user);
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // ..
-            });
+        try {
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user, "login success!");
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                });
+        } catch (error) {
+            setDidError(true);
+        }
     };
     return (
         <>
@@ -55,7 +58,9 @@ const LoginHome = () => {
                     </div>
                     <div className="mainOptions">
                         <button className="login_button">LOG IN</button>
+
                         <div className="register_button">REGISTER</div>
+
                         {didError && <span>An Error has occured</span>}
                     </div>
                 </form>
