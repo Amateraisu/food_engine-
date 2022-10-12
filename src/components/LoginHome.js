@@ -1,9 +1,28 @@
 import React from "react";
+import { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase.js";
 
 const LoginHome = () => {
+    const [didError, setDidError] = useState(false);
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("submitted", event.target[0]);
+
+        const email = event.target[0].value;
+        const password = event.target[1].value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                console.log("my user", user);
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
     };
     return (
         <>
@@ -17,8 +36,18 @@ const LoginHome = () => {
                     <div>OR</div>
                 </div>
                 <form onSubmit={handleSubmit}>
-                    <input id="Email" placeholder="EMAIL" required />
-                    <input id="Password" placeholder="PASSWORD" required />
+                    <input
+                        type="email"
+                        id="Email"
+                        placeholder="email"
+                        required
+                    />
+                    <input
+                        type="password"
+                        id="Password"
+                        placeholder="PASSWORD"
+                        required
+                    />
 
                     <div className="otherOptions">
                         <div>Use as Guest</div>
@@ -27,6 +56,7 @@ const LoginHome = () => {
                     <div className="mainOptions">
                         <button className="login_button">LOG IN</button>
                         <div className="register_button">REGISTER</div>
+                        {didError && <span>An Error has occured</span>}
                     </div>
                 </form>
             </div>
