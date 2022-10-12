@@ -1,24 +1,27 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { createContext, useEffect, useState } from "react";
-import { auth } from "./../firebase";
+import { createContext, useEffect } from "react";
+import { auth } from "../firebase";
+
+import { useState } from "react";
 
 export const AuthContext = createContext();
 
-export const AuthContextProvider = ({ child }) => {
+export const AuthContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({});
+    console.log("ran provider");
 
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
+        const onCall = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
-            console.log(user);
+            console.log(user, "AuthContext ran");
         });
 
-        onAuthStateChanged();
-    }, [currentUser]);
+        onCall();
+    }, []);
 
     return (
-        <AuthContext.Provider value={{ currentUser }}>
-            {child}
+        <AuthContext.Provider value={currentUser}>
+            {children}
         </AuthContext.Provider>
     );
 };

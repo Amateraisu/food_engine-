@@ -5,7 +5,7 @@ const Home = () => {
     return (
         <div className="App home">
             <Login />
-
+            HOME PAGE TEST
             <style jsx="true">
                 {`
                     .App {

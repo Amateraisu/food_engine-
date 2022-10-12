@@ -3,10 +3,11 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
-import { Link } from "react-router-dom";
+import { Link, navigate, useNavigate } from "react-router-dom";
 
 const LoginHome = () => {
     const [didError, setDidError] = useState(false);
+    const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -18,10 +19,12 @@ const LoginHome = () => {
                 .then((userCredential) => {
                     const user = userCredential.user;
                     console.log(user, "login success!");
+                    navigate("./home");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
+                    console.log("errored");
                 });
         } catch (error) {
             setDidError(true);
