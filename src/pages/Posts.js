@@ -1,4 +1,4 @@
-import Reac, {Component} from "react";
+import React, {Component} from "react";
 import FoodEngineLogo from "./../components/FoodEngineLogo";
 import Header from "./../components/Header";
 import "./../../src/index.css";
