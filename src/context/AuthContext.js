@@ -8,12 +8,12 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({});
-    //console.log("ran provider");
+    console.log("ran provider");
 
     useEffect(() => {
         const onCall = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
-            //console.log(user, "AuthContext ran");
+            console.log(user, "AuthContext ran");
         });
 
         onCall();
