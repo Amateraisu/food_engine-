@@ -16,8 +16,8 @@ class Header extends Component {
             <div class="topnav">
                 <a class="appName">FOOD ENGINE</a>
                 <div className="topnav-right">
-                    <NavLink className="nav-link"  to='/home'><img src='/user1.png' height="35" width="45" alt='userimg' /></NavLink>
-                    <NavLink className="nav-link" to='/aboutus'><img src='/location1.png' height="30" width="41" alt='locationimg' /></NavLink>
+                    <NavLink className="nav-link"  to='/home'><img src='/user1.png' height="45" width="45" alt='userimg' /></NavLink>
+                    <NavLink className="nav-link" to='/aboutus'><img src='/location1.png' height="40" width="40" alt='locationimg' /></NavLink>
                 </div>
                     
             </div>
