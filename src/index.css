@@ -1,6 +1,14 @@
+@font-face {
+  font-family: "FredokaOne";
+  src: local("FredokaOne"),
+   url("./fonts/FredokaOne-Regular.ttf") format("truetype");
+  font-weight: bold;
+  }
 
 
 body {
+  
+  font-family: "FredokaOne";
   margin: 0;
   background-color: #FCF8E8;
 }

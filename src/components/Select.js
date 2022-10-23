@@ -1,17 +1,14 @@
 import React from 'react'
 
-const Select = ({ onChangeHandler, onClickHandler }) => {
+const Select = ({ onChangeHandler }) => {
   return (
     <div className="selectType">
         <form className="selectCuisine">
-            <p>Choose Cuisine:</p>
+            <p>Filters:</p>
             <select id="select1" onChange={onChangeHandler}>
-                <option value="All" >All</option>
-                <option value="Chinese" >Chinese</option>
-                <option value="Japanese">Japanese</option>
-                <option value="Pizza">Pizza</option>
+                <option value="RateDesc" >Ratings - Descending</option>
+                <option value="RateAsce">Ratings - Ascending</option>
             </select>
-            <input  type='submit' value='FILTER' className='btn btn-block' onClick ={onClickHandler} ></input>
         </form>
     </div>
   )
