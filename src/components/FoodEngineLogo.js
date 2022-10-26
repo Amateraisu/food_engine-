@@ -2,7 +2,7 @@ import React from "react";
 
 const FoodEngineLogo = () => {
     return (
-        <>
+        <React.Fragment>
             <div className="FoodEngineWrapper">
                 <div className="image_wrapper">
                     <img
@@ -41,7 +41,7 @@ const FoodEngineLogo = () => {
                     }
                 `}
             </style>
-        </>
+        </React.Fragment>
     );
 };
 

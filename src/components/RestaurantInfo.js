@@ -26,6 +26,13 @@ const RestaurantInfo = ({restaurant}) => {
     return mapURL;
   }
   
+  const getPicture = (restaurant) =>{
+    console.log(restaurant.photos[0].photo_reference);
+    let pictureURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=PHOTOREF&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk&q";
+    pictureURL = pictureURL.replace("PHOTOREF", restaurant.photos[0].photo_reference);
+    return pictureURL;
+  }
+
   return (
     <div>
         <Button variant="primary" onClick={handleShow}>
@@ -35,7 +42,9 @@ const RestaurantInfo = ({restaurant}) => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header >
+        <img src = {getPicture(restaurant)}></img>
         <iframe src = {getFrameURL(restaurant.name)}></iframe>
+        
           <Modal.Title>{restaurant.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
