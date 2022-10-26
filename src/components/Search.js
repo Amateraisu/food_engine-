@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Header from './Header'
+import Searchbar from './SearchBar'
 import Restaurants from './Restaurants'
 import Select from './Select'
 import axios from 'axios'
@@ -110,9 +110,8 @@ function Search(){
 
     return(
         <div className = 'container'>
-          <h1>The Food Engine</h1>
-          <Header 
-            title ='The Food Engine' 
+
+          <Searchbar 
             onChangeHandler = {onSearchChange}
             onClickHandler = {onClickHandler}
           />

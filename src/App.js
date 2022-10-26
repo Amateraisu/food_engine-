@@ -1,7 +1,8 @@
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
-import Posts from "./pages/Posts"
+import Events from "./pages/Events";
+import SearchRestraurant from "./pages/SearchRestaurant";
 import "./style.scss";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -19,7 +20,8 @@ function App() {
                     <Route index element={<Login />} />
                     <Route path="register" element={<Register />} />
                     <Route path="home" element={<Home />} />
-                    <Route path="post" element={<Posts />} />
+                    <Route path="events" element={<Events />} />
+                    <Route path="search" element={<SearchRestraurant/>} />
                 </Route>
             </Routes>
         </BrowserRouter>
