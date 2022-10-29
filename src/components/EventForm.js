@@ -4,29 +4,24 @@ import {Modal, ModalHeader, ModalBody, FormGroup,Button,Form, Input, Label} from
 
 const EventForm = ({openEventForm}) => {
     return (
-        <Modal isOpen={openEventForm} >
+        <Modal show={showEventForm} >
         <ModalHeader>Login</ModalHeader>
         <ModalBody>
-            <Form onSubmit={this.handleLogin}>
-                    <FormGroup>
-                        <Label htmlFor="username">Username</Label>
-                        <Input type="text" id="username" name="username"
-                            innerRef={(input) => this.username = input} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label htmlFor="password">Password</Label>
-                        <Input type="password" id="password" name="password"
-                            innerRef={(input) => this.password = input}  />
-                    </FormGroup>
-                    <FormGroup check>
-                        <Label check>
-                            <Input type="checkbox" name="remember"
-                            innerRef={(input) => this.remember = input}  />
-                            Remember me
-                        </Label>
-                    </FormGroup>
-                    <Button type="submit" value="submit" color="primary">Login</Button>
-                </Form>
+            <Form onSubmit={handleEventSubmit}>
+              <FormGroup>
+                <label>Event name:  <input type="text"/></label>
+              </FormGroup>
+              <FormGroup>
+                <label>Event Duration:  <input type="text"/></label>
+              </FormGroup>
+              
+
+              <Button variant="primary" value="submit" className="btn btn-default">Create Event</Button>
+            </Form>
+          <Button type="button" variant="secondary" className = "btn btn-default" onClick={closeEventForm}>
+            Cancel
+          </Button>
+          
         </ModalBody>
     </Modal>
   )
