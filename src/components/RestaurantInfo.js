@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import {ModalHeader, ModalBody, FormGroup,Form, Input, Label} from 'reactstrap'
+
+import {Modal, Button} from "react-bootstrap"
+import {FormGroup, Form, Input, Label} from 'reactstrap'
+import EventForm from './EventForm'
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import "./RestaurantInfo.css";
+import ReactDatePicker from 'react-datepicker';
 
 
 
@@ -10,11 +14,17 @@ import "./RestaurantInfo.css";
 const RestaurantInfo = ({restaurant}) => {
     const [show, setShow] = useState(false);
     const [showEventForm, setShowEventForm] = useState(false);
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const openEventForm = () => setShowEventForm(true);
   const closeEventForm = () => setShowEventForm(false);
+
+  
+
   const handleEventSubmit = (event) => {
     event.preventDefault();
     alert(`Submission succesffully received!`)
@@ -33,8 +43,11 @@ const RestaurantInfo = ({restaurant}) => {
     return pictureURL;
   }
 
+
+
   return (
-    <div>
+    
+    <div className="col-12 col-md-5 m-1">
         <Button variant="primary" onClick={handleShow}>
         Show more information!
       </Button>
@@ -64,25 +77,45 @@ const RestaurantInfo = ({restaurant}) => {
         </Modal.Footer>
       </Modal>
 
-      <Modal show={showEventForm} >
-        <ModalHeader>Login</ModalHeader>
-        <ModalBody>
-            <Form onSubmit={handleEventSubmit}>
+      <Modal show={showEventForm}>
+        <Modal.Header><Modal.Title>{restaurant.name}</Modal.Title></Modal.Header>
+        <Modal.Body>
+            <Form onSubmit={handleEventSubmit} class="form-horizontal">
               <FormGroup>
-                <label>Event name:  <input type="text"/></label>
+                <Label htmlFor="eventname">Event name:  </Label>
+                <Input type="text" id="eventname" name = "eventname"/>
               </FormGroup>
+              
               <FormGroup>
-                <label>Event Duration:  <input type="text"/></label>
+                <Label>Event Duration:  </Label>
+                <input type="text" />
+              </FormGroup>
+
+              <FormGroup>
+                <Label>Event Date: </Label>
+                <DatePicker   showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" minDate={new Date()} selected={startDate} onChange={(date) => setStartDate(date)} />
+              </FormGroup>
+
+              <FormGroup check>
+                  <Label check> Private event?</Label>
+                  
+                      <Input type="checkbox" name="remember" />
+                      
+                  
               </FormGroup>
               
 
-              <Button variant="primary" value="submit" className="btn btn-default">Create Event</Button>
+              
             </Form>
-          <Button type="button" variant="secondary" className = "btn btn-default" onClick={closeEventForm}>
+
+          <Modal.Footer>
+            <Button variant="primary" value="submit" className="btn btn-default">Create Event</Button>
+            <Button type="button" variant="secondary" className = "btn btn-default" onClick={closeEventForm}>
             Cancel
-          </Button>
+            </Button>
+          </Modal.Footer>
           
-        </ModalBody>
+        </Modal.Body>
     </Modal>
     </div>
   )
