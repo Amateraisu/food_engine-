@@ -12,9 +12,9 @@
     
   }
 
-  .modal-title {
+  .modal-header {
     font-weight:bold;
-    font-size:32px;
+    font-size:26px;
   }
   
   /* Modal Content/Box */
@@ -27,13 +27,10 @@
     border-radius: 25px;
   }
 
-  .form{
-    margin-bottom:15px;
+  #formgroup{
+    padding-bottom: 15px;
   }
 
-  /* .event-form.modal-content {
-    width: 50%;
-  } */
   
   /* The Close Button */
   .close {
@@ -42,6 +39,8 @@
     font-size: 28px;
     font-weight: bold;
   }
+
+
   
   .close:hover,
   .close:focus {

@@ -1,42 +1,54 @@
 import React, { useState } from 'react';
 
 import {Modal, Button} from "react-bootstrap"
-import {FormGroup, Form, Input, Label} from 'reactstrap'
-import EventForm from './EventForm'
+import {Input, Label, ModalHeader, ModalBody, ModalFooter, Form, FormGroup} from 'reactstrap'
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import "./RestaurantInfo.css";
 import ReactDatePicker from 'react-datepicker';
 
 
+class RestaurantInfo extends React.Component{
 
+  constructor(props) {
+    super(props);
 
-const RestaurantInfo = ({restaurant}) => {
-    const [show, setShow] = useState(false);
-    const [showEventForm, setShowEventForm] = useState(false);
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    
+    this.toggleRestaurant = this.toggleRestaurant.bind(this);
+    this.toggleEventForm = this.toggleEventForm.bind(this);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const openEventForm = () => setShowEventForm(true);
-  const closeEventForm = () => setShowEventForm(false);
-
-  
-
-  const handleEventSubmit = (event) => {
-    event.preventDefault();
-    alert(`Submission succesffully received!`)
+    this.state = {
+        showRestaurantInfo: false,
+        showEventForm: false
+    };
   }
 
-  const getFrameURL = (restaurantname) =>{
+  toggleRestaurant (event) {
+    console.log("fuck")
+    this.setState({showRestaurantInfo: !this.state.showRestaurantInfo});
+  }
+
+  toggleEventForm (event) {
+    this.setState({showEventForm: !this.state.showEventForm});
+  }
+
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  getFrameURL(restaurantname) {
     let mapURL = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk&q=" + restaurantname;
     console.log(mapURL);
     return mapURL;
   }
   
-  const getPicture = (restaurant) =>{
+  getPicture(restaurant) {
     console.log(restaurant.photos[0].photo_reference);
     let pictureURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=PHOTOREF&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk&q";
     pictureURL = pictureURL.replace("PHOTOREF", restaurant.photos[0].photo_reference);
@@ -44,81 +56,100 @@ const RestaurantInfo = ({restaurant}) => {
   }
 
 
-
-  return (
+  handleEventSubmit(event){
+    console.log("fuckkkkkk")
+    alert("Event Name: " + this.eventname.value);
     
-    <div className="col-12 col-md-5 m-1">
-        <Button variant="primary" onClick={handleShow}>
-        Show more information!
-      </Button>
+    event.preventDefault();
+
+  }
+
+  render() {
+    return (
+    
+      <div className="col-12 col-md-5 m-1">
+          <Button variant="primary" onClick={this.toggleRestaurant}>
+          Show more information!
+        </Button>
+  
+  
+        <Modal show={this.state.showRestaurantInfo} toggle={this.toggleRestaurant}>
+          <ModalHeader >
+          <img src = {this.getPicture(this.props.restaurant)}></img>
+          <iframe src = {this.getFrameURL(this.props.restaurant.name)}></iframe>
+          
+            <Modal.Title>{this.props.restaurant.name}</Modal.Title>
+          </ModalHeader>
+          <ModalBody>
+          
+          <p>Price Level: {this.props.restaurant.price_level}</p>
+          <p>Rating: {this.props.restaurant.rating}</p>
+          <p>Address: {this.props.restaurant.vicinity}</p>
+  
+          </ModalBody>
+          <ModalFooter>
+            <Button type="button" variant="secondary" className = "btn btn-default" onClick={this.toggleRestaurant}>
+              Close
+            </Button>
+            <Button variant="primary" className="btn btn-default" onClick={this.toggleEventForm}>
+              Create Event
+            </Button>
+          </ModalFooter>
+        </Modal>
+
+        <Modal show={this.state.showEventForm} toggle={this.toggleEventForm}>
+        <ModalHeader>{this.props.restaurant.name}</ModalHeader>
+        <ModalBody >
+            <Form onSubmit={this.handleEventSubmit}>
+
+              <div id="formgroup">
+                <FormGroup>
+                  <Label htmlFor="eventname">Event name:  </Label>
+                  <input type="text" name = "eventname" value={this.eventname} onChange={this.handleChange}/>
+                </FormGroup>  
+              </div>
 
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header >
-        <img src = {getPicture(restaurant)}></img>
-        <iframe src = {getFrameURL(restaurant.name)}></iframe>
-        
-          <Modal.Title>{restaurant.name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        
-        <p>Price Level: {restaurant.price_level}</p>
-        <p>Rating: {restaurant.rating}</p>
-        <p>Address: {restaurant.vicinity}</p>
-
-        </Modal.Body>
-        <Modal.Footer>
-          <Button type="button" variant="secondary" className = "btn btn-default" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" className="btn btn-default" onClick={openEventForm}>
-            Create Event
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal show={showEventForm}>
-        <Modal.Header><Modal.Title>{restaurant.name}</Modal.Title></Modal.Header>
-        <Modal.Body>
-            <Form onSubmit={handleEventSubmit} class="form-horizontal">
-              <FormGroup>
-                <Label htmlFor="eventname">Event name:  </Label>
-                <Input type="text" id="eventname" name = "eventname"/>
-              </FormGroup>
               
-              <FormGroup>
-                <Label>Event Duration:  </Label>
-                <input type="text" />
-              </FormGroup>
+              <div id="formgroup">
+                <FormGroup>
+                  <Label>Event Duration:  </Label>
+                  <input type="text" name = "eventduration" value={this.eventduration} onChange={this.handleChange}/>
+                </FormGroup>
+              </div>
 
-              <FormGroup>
-                <Label>Event Date: </Label>
-                <DatePicker   showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" minDate={new Date()} selected={startDate} onChange={(date) => setStartDate(date)} />
-              </FormGroup>
 
-              <FormGroup check>
+
+              <div id="formgroup">
+                <FormGroup>
+                  <Label>Event Date: </Label>
+                  <DatePicker showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" date={new Date()} />
+                </FormGroup>
+              </div>
+          
+              {/* <p> 
+                <FormGroup check>
                   <Label check> Private event?</Label>
-                  
-                      <Input type="checkbox" name="remember" />
-                      
-                  
-              </FormGroup>
-              
+                  <Input type="checkbox" name="visibility" value={this.visibility}/>
+                </FormGroup>
+              </p> */}
 
-              
+              <Button variant="primary" type="submit" className="btn btn-default">Create Event</Button>
             </Form>
 
-          <Modal.Footer>
-            <Button variant="primary" value="submit" className="btn btn-default">Create Event</Button>
-            <Button type="button" variant="secondary" className = "btn btn-default" onClick={closeEventForm}>
+          <ModalFooter>
+            
+            <Button type="button" variant="secondary" className = "btn btn-default" onClick={this.toggleEventForm}>
             Cancel
             </Button>
-          </Modal.Footer>
+          </ModalFooter>
           
-        </Modal.Body>
+        </ModalBody>
     </Modal>
-    </div>
-  )
+      </div>
+    )
+  }
+
 }
 
 export default RestaurantInfo;
