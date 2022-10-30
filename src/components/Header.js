@@ -13,7 +13,7 @@ class Header extends Component {
 
     render() {
         return(
-            <div class="topnav">
+            <div class="topnav container">
 
                 <a class="appName" >FOOD ENGINE</a>
                 <div className="topnav-right">

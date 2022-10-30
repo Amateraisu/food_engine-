@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 
 import {Modal, Button} from "react-bootstrap"
 import {Input, Label, ModalHeader, ModalBody, ModalFooter, Form, FormGroup} from 'reactstrap'
-import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import "./RestaurantInfo.css";
-import ReactDatePicker from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 
 
 class RestaurantInfo extends React.Component{
@@ -17,8 +16,15 @@ class RestaurantInfo extends React.Component{
     this.toggleEventForm = this.toggleEventForm.bind(this);
 
     this.state = {
+        // Should save the username also
         showRestaurantInfo: false,
-        showEventForm: false
+        showEventForm: false,
+        eventname: '',
+        eventduration: '',
+        date: new Date(),
+        privateEvent: false,
+        restaurantDetails: this.props.restaurant,
+
     };
   }
 
@@ -32,7 +38,7 @@ class RestaurantInfo extends React.Component{
   }
 
 
-  handleChange(event) {
+  handleChange = event => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -41,6 +47,7 @@ class RestaurantInfo extends React.Component{
       [name]: value
     });
   }
+
 
   getFrameURL(restaurantname) {
     let mapURL = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk&q=" + restaurantname;
@@ -56,10 +63,11 @@ class RestaurantInfo extends React.Component{
   }
 
 
-  handleEventSubmit(event){
-    console.log("fuckkkkkk")
-    alert("Event Name: " + this.eventname.value);
-    
+  handleEventSubmit = event =>{
+    this.toggleEventForm();
+    console.log("fuckkkkkk");
+    console.log('Current State is: ' + JSON.stringify(this.state));
+    alert('Current State is: ' + JSON.stringify(this.state));
     event.preventDefault();
 
   }
@@ -103,18 +111,18 @@ class RestaurantInfo extends React.Component{
             <Form onSubmit={this.handleEventSubmit}>
 
               <div id="formgroup">
-                <FormGroup>
+                <FormGroup Row>
                   <Label htmlFor="eventname">Event name:  </Label>
-                  <input type="text" name = "eventname" value={this.eventname} onChange={this.handleChange}/>
+                  <Input type="text" placeholder="Event Name" name="eventname" id="eventname" value={this.state.eventname} onChange={this.handleChange}/>
                 </FormGroup>  
               </div>
 
 
               
               <div id="formgroup">
-                <FormGroup>
-                  <Label>Event Duration:  </Label>
-                  <input type="text" name = "eventduration" value={this.eventduration} onChange={this.handleChange}/>
+                <FormGroup Row>
+                  <Label htmlFor="eventduration">Event Duration:  </Label>
+                  <Input type="text" name="eventduration" id="eventduration" value={this.state.eventduration} onChange={this.handleChange}/>
                 </FormGroup>
               </div>
 
@@ -127,12 +135,12 @@ class RestaurantInfo extends React.Component{
                 </FormGroup>
               </div>
           
-              {/* <p> 
+              <div id="formgroup"> 
                 <FormGroup check>
                   <Label check> Private event?</Label>
-                  <Input type="checkbox" name="visibility" value={this.visibility}/>
+                  <Input type="checkbox" name="privateEvent" value={this.privateEvent} onChange={this.handleChange}/>
                 </FormGroup>
-              </p> */}
+              </div>
 
               <Button variant="primary" type="submit" className="btn btn-default">Create Event</Button>
             </Form>

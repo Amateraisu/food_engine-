@@ -4,12 +4,18 @@ import Header from "./../components/Header";
 import Search from "./../components/Search";
 import "./../../src/index.css";
 
-class Posts extends Component {
+class SearchRestaurant extends Component {
     render(){
         return (
             <div>
+                <div class="row">
                 <Header />
+                </div>
+                
+                <div class="row">
                 <Search />
+                </div>
+                
     
             </div>
         );
@@ -17,4 +23,4 @@ class Posts extends Component {
 }
 
 
-export default Posts;
+export default SearchRestaurant;
