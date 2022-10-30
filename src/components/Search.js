@@ -12,24 +12,20 @@ function Search(){
     const [filteredRestaurants, setFilterRestaurants] = useState([])
     const [latitude, setLatitude] = useState('');
     const [longitude, setLongitude] = useState('');
-    //const API_URL = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?origins=")
 
-    //"+placeName+"&destinations="+destination+"&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk
-    /* useEffect(() =>{
-      
-      axios
-      .get("https://maps.googleapis.com/maps/api/distancematrix/json?origins=Nanyang+Technological+University&destinations=School+of+Social+Science+(SSS)&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk")
-      .then((response) => {
-        console.log(response);
-        console.log(response.data, "DATA HERE");
-        
-      })
-
-      .catch((error) => {
-        console.log(error);
-      })
-      
-    }, []) */
+    if(!navigator.geolocation){
+      return alert('Geolocation is not supported by your browser.')
+    }
+    else{
+        navigator.geolocation.getCurrentPosition((position)=>{
+            console.log(position.coords.latitude, position.coords.longitude);
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude);
+        }, () => {
+            alert('Unable to fetch location');
+        }
+        )
+    }
 
     let onClickHandler = (event) =>{
       event.preventDefault()
