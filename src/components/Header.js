@@ -14,7 +14,7 @@ class Header extends Component {
     render() {
         return(
             <div class="topnav container">
-
+<NavLink className="nav-link"  to='/events'><img src='/bibimbap.png' height="45" width="45" alt='userimg' /></NavLink>
                 <a class="appName" >FOOD ENGINE</a>
                 <div className="topnav-right">
                     <NavLink className="nav-link"  to='/home'><img src='/user1.png' height="45" width="45" alt='userimg' /></NavLink>
