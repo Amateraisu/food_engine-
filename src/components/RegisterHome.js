@@ -58,7 +58,7 @@ const LoginHome = () => {
                         <div>Forgot Password?</div>
                     </div>
                     <div className="mainOptions">
-                        <button className="login_button">REGISTER JERE</button>
+                        <button className="login_button">Register ACC</button>
                         <div className="register_button"><Link to="../home" style={{color: 'inherit', textDecoration: 'inherit'}}>LOGIN PAGE</Link></div>
                         {didError && <span>An Error has occured</span>}
                     </div>
