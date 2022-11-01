@@ -3,6 +3,8 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
 import { Link, navigate, useNavigate } from "react-router-dom";
+import { collection, doc, setDoc, addDoc } from "firebase/firestore"; 
+import { db } from "../firebase.js";
 
 const LoginHome = () => {
     const [didError, setDidError] = useState(false);
@@ -17,6 +19,9 @@ const LoginHome = () => {
                 // Signed in
                 const user = userCredential.user;
                 console.log("my user", user);
+                const docRef =  setDoc(doc(db, "followingList", email), 
+                {following:[]}
+                        );
                 alert(user)
                 // ...
             })

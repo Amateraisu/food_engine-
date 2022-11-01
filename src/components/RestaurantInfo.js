@@ -2,86 +2,72 @@ import React, { useState } from 'react';
 
 import {Modal, Button} from "react-bootstrap"
 import {Input, Label, ModalHeader, ModalBody, ModalFooter, Form, FormGroup} from 'reactstrap'
-import Select from "react-dropdown-select";
 import "react-datepicker/dist/react-datepicker.css";
 import "./RestaurantInfo.css";
 import DatePicker from 'react-datepicker';
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { collection, doc, setDoc, addDoc } from "firebase/firestore"; 
 import { db } from "../firebase.js";
 
-class RestaurantInfo extends React.Component{
+function RestaurantInfo(props){
+  console.log("props", props)
+  const { currentUser } = useContext(AuthContext);
+  const [showRestaurantInfo, toggleRestaurant] = useState(false);
+  const [showEventForm, toggleEventForm] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+  const restaurant = props.props;
 
-  constructor(props) {
-    super(props);
+//do like toggleRestaurant(false)
 
-    this.toggleRestaurant = this.toggleRestaurant.bind(this);
-    this.toggleEventForm = this.toggleEventForm.bind(this);
-
-    this.state = {
-        // Should save the username also
-        showRestaurantInfo: false,
-        showEventForm: false,
-        eventname: '',
-        eventduration: '',
-        paxlimit: '',
-        date: new Date(),
-        privateEvent: false,
-        restaurantDetails: this.props.restaurant,
-
-    };
-  }
-
-  toggleRestaurant (event) {
-    this.setState({showRestaurantInfo: !this.state.showRestaurantInfo});
-  }
-
-  toggleEventForm (event) {
-    this.setState({showEventForm: !this.state.showEventForm});
-  }
-
-  handleDateChange = date => {
-    this.setState({ date: date })
-  }
-
-
-  handleChange = event => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  }
-
-
-  getFrameURL(restaurantname) {
+  const getFrameURL = (restaurantname) =>{
     let mapURL = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk&q=" + restaurantname;
     console.log(mapURL);
     return mapURL;
   }
   
-   getPicture(restaurant){
+   const getPicture = (restaurant) =>{
     if(!restaurant.photos){
       return restaurant.icon;
     }
+
     console.log(restaurant.photos[0].photo_reference);
     let pictureURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=PHOTOREF&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk&q";
     pictureURL = pictureURL.replace("PHOTOREF", restaurant.photos[0].photo_reference);
     return pictureURL;
   }
 
+  const onClickEventForm = () => {
+    if(currentUser != null){
+      toggleEventForm(true);
+    }
+    else{
+      alert("NOT LOGGED IN");
+    }
+  }
 
-  handleEventSubmit = event =>{
-    event.preventDefault();
+
+  const handleEventSubmit = event =>{
     
+    event.preventDefault();
+    const returnJSON = {};
 
-    console.log('Current State is: ' + JSON.stringify(this.state));
-    alert('Current State is: ' + JSON.stringify(this.state));
+    returnJSON[event.target[0].id] = event.target[0].value;
+    returnJSON[event.target[1].id] = event.target[1].value;
+    returnJSON[event.target[2].id] = event.target[2].value;
+    returnJSON["date"] = event.target[3].value;
+    returnJSON[event.target[4].id] = event.target[4].value;
+    returnJSON[event.target[5].id] = event.target[4].value;
+    returnJSON["restaurantDetails"] = restaurant;
+    returnJSON["participantList"] = [currentUser.email];
+    returnJSON["eventCreator"] = currentUser.email;
+
+    console.log("returnJSON", returnJSON);
+    
 
     try {
       const docRef =  addDoc(collection(db, "events"), 
-        this.state
+        returnJSON
       );
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -90,53 +76,52 @@ class RestaurantInfo extends React.Component{
 
 
     console.log("dbsaved?")
-    this.toggleEventForm();
+    toggleEventForm(false);
     
 
   }
 
-  render() {
     return (
     
       <div className="col-12 col-md-5 m-1">
-          <Button variant="primary" onClick={this.toggleRestaurant}>
+          <Button variant="primary" onClick={() => toggleRestaurant(true)}>
           Show more information!
         </Button>
   
   
-        <Modal show={this.state.showRestaurantInfo} toggle={this.toggleRestaurant}>
+        <Modal show={showRestaurantInfo}>
           <ModalHeader >
-          <img src = {this.getPicture(this.props.restaurant)}></img>
-          <iframe src = {this.getFrameURL(this.props.restaurant.name)}></iframe>
+          <img src = {getPicture(restaurant)}></img>
+          <iframe src = {getFrameURL(restaurant.name)}></iframe>
           
-            <Modal.Title>{this.props.restaurant.name}</Modal.Title>
+            <Modal.Title>{restaurant.name}</Modal.Title>
           </ModalHeader>
           <ModalBody>
           
-          <p>Price Level: {this.props.restaurant.price_level}</p>
-          <p>Rating: {this.props.restaurant.rating}</p>
-          <p>Address: {this.props.restaurant.vicinity}</p>
+          <p>Price Level: {restaurant.price_level}</p>
+          <p>Rating: {restaurant.rating}</p>
+          <p>Address: {restaurant.vicinity}</p>
   
           </ModalBody>
           <ModalFooter>
-            <Button type="button" variant="secondary" className = "btn btn-default" onClick={this.toggleRestaurant}>
+            <Button type="button" variant="secondary" className = "btn btn-default" onClick={() => toggleRestaurant(false)}>
               Close
             </Button>
-            <Button variant="primary" className="btn btn-default" onClick={this.toggleEventForm}>
+            <Button variant="primary" className="btn btn-default" onClick={() =>onClickEventForm()}>
               Create Event
             </Button>
           </ModalFooter>
         </Modal>
 
-        <Modal show={this.state.showEventForm} toggle={this.toggleEventForm}>
-        <ModalHeader>{this.props.restaurant.name}</ModalHeader>
+        <Modal show={showEventForm} >
+        <ModalHeader>{restaurant.name}</ModalHeader>
         <ModalBody >
-            <Form onSubmit={this.handleEventSubmit}>
+            <Form onSubmit={handleEventSubmit}>
 
               <div id="formgroup">
                 <FormGroup Row>
-                  <Label htmlFor="eventname">Event name:  </Label>
-                  <Input type="text" placeholder="Event Name" name="eventname" id="eventname" value={this.state.eventname} onChange={this.handleChange}/>
+                  <Label>Event name:  </Label>
+                  <Input type="text"  id="eventname" required/>
                 </FormGroup>  
               </div>
 
@@ -144,15 +129,15 @@ class RestaurantInfo extends React.Component{
               
               <div id="formgroup">
                 <FormGroup Row>
-                  <Label htmlFor="eventduration">Event Duration:  </Label>
-                  <Input type="number" name="eventduration" id="eventduration" min="1" max="24" step="0.5" value={this.state.eventduration} onChange={this.handleChange}/>
+                  <Label>Event Duration:  </Label>
+                  <Input type="number"  id="eventduration" min="1" max="24" step="0.5" required/>
                 </FormGroup>
               </div>
 
               <div id="formgroup">
                 <FormGroup Row>
-                  <Label htmlFor="paxlimit">Max number of members:  </Label>
-                  <Input type="number" name="paxlimit" id="paxlimit" min="1" max="24" value={this.state.paxlimit} onChange={this.handleChange}/>
+                  <Label>Max number of members:  </Label>
+                  <Input type="number" id="paxlimit" min="1" max="24"  required/>
                 </FormGroup>
               </div>
 
@@ -161,14 +146,24 @@ class RestaurantInfo extends React.Component{
               <div id="formgroup">
                 <FormGroup>
                   <Label>Event Date: </Label>
-                  <DatePicker showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" selected={this.state.date} onChange={this.handleDateChange} />
+                  <DatePicker showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" selected={startDate}  />
                 </FormGroup>
               </div>
+
+              
+              <div id="formgroup">
+                <FormGroup Row>
+                  <Label>Description:  </Label>
+                  <Input type="text"  id="eventdesc" deafault=" " required/>
+                </FormGroup>  
+              </div>
+              
+          
           
               <div id="formgroup"> 
                 <FormGroup check>
                   <Label check> Private event?</Label>
-                  <Input type="checkbox" name="privateEvent" value={this.privateEvent} onChange={this.handleChange}/>
+                  <Input type="checkbox" id="privateEvent" />
                 </FormGroup>
               </div>
 
@@ -177,17 +172,15 @@ class RestaurantInfo extends React.Component{
 
           <ModalFooter>
             
-            <Button type="button" variant="secondary" className = "btn btn-default" onClick={this.toggleEventForm}>
+            <Button type="button" variant="secondary" className = "btn btn-default" onClick={() => toggleEventForm(false)}>
             Cancel
             </Button>
           </ModalFooter>
           
         </ModalBody>
-    </Modal>
-      </div>
+      </Modal>
+        </div>
     )
-  }
-
 }
 
 export default RestaurantInfo;

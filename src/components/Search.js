@@ -109,7 +109,7 @@ function Search(){
 
     return(
         <div className = 'container'>
-            {console.log("user", currentUser.email)}
+
           <Searchbar 
             onChangeHandler = {onSearchChange}
             onClickHandler = {onClickHandler}

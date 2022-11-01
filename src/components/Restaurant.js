@@ -18,7 +18,8 @@ const Restaurant = ({restaurant, onClickHandler}) => {
       <p>Price Level: {restaurant.price_level}</p>
       <p>Rating: {restaurant.rating}</p>
       <p>Address: {restaurant.vicinity}</p>
-      <RestaurantInfo restaurant = {restaurant} />
+      <RestaurantInfo props = {restaurant} />
+      {console.log("outerlayer")}
     </div>
   )
 }
