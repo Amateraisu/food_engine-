@@ -11,8 +11,8 @@ import { useContext } from "react";
 import { auth } from "./firebase";
 
 function App() {
-    //const { currentUser } = useContext(AuthContext);
-    //console.log(currentUser, "user");
+    const { currentUser } = useContext(AuthContext);
+    console.log(currentUser, "user");
     return (
         <BrowserRouter>
             <Routes>

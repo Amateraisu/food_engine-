@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
+import { Link, navigate, useNavigate } from "react-router-dom";
 
 const LoginHome = () => {
     const [didError, setDidError] = useState(false);
@@ -16,11 +17,13 @@ const LoginHome = () => {
                 // Signed in
                 const user = userCredential.user;
                 console.log("my user", user);
+                alert(user)
                 // ...
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                alert(errorMessage)
                 console.log("error occured", errorMessage);
                 // ..
             });
@@ -56,7 +59,7 @@ const LoginHome = () => {
                     </div>
                     <div className="mainOptions">
                         <button className="login_button">Register ACC</button>
-                        <div className="register_button">LOGIN PAGE</div>
+                        <div className="register_button"><Link to="../home" style={{color: 'inherit', textDecoration: 'inherit'}}>LOGIN PAGE</Link></div>
                         {didError && <span>An Error has occured</span>}
                     </div>
                 </form>

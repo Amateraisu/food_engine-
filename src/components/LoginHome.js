@@ -18,13 +18,17 @@ const LoginHome = () => {
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    console.log(user, "login success!");
-                    navigate("./home");
+                    console.log(email, "login success!");
+                    alert("Welcome back" + email)
+                    alert(email)
+                    navigate("../search");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
+                    alert(errorMessage)
                     console.log("errored");
+                    
                 });
         } catch (error) {
             setDidError(true);
@@ -57,12 +61,12 @@ const LoginHome = () => {
 
                     <div className="otherOptions">
                         <div>Use as Guest</div>
-                        <div>Forgot Password?</div>
+                        <div >Forgot Password?</div>
                     </div>
                     <div className="mainOptions">
                         <button className="login_button">LOG IN</button>
 
-                        <div className="register_button">REGISTER</div>
+                        <div className="register_button na" ><Link to="../register" style={{color: 'inherit', textDecoration: 'inherit'}}>REGISTER</Link></div>
 
                         {didError && <span>An Error has occured</span>}
                     </div>
