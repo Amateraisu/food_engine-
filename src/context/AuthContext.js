@@ -16,11 +16,13 @@ export const AuthContextProvider = ({ children }) => {
             console.log(user, "AuthContext ran");
         });
 
-        onCall();
-    }, [currentUser]);
+        return () => {
+            onCall();
+        };
+    }, []);
 
     return (
-        <AuthContext.Provider value={currentUser}>
+        <AuthContext.Provider value={{ currentUser }}>
             {children}
         </AuthContext.Provider>
     );
