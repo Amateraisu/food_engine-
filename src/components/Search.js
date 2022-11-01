@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Searchbar from './SearchBar'
+import { AuthContext } from "../context/AuthContext";
 import Restaurants from './Restaurants'
 import Select from './Select'
+
 import axios from 'axios'
 
 function Search(){
@@ -12,6 +14,7 @@ function Search(){
     const [filteredRestaurants, setFilterRestaurants] = useState([])
     const [latitude, setLatitude] = useState('');
     const [longitude, setLongitude] = useState('');
+    const { currentUser } = useContext(AuthContext);
 
     if(!navigator.geolocation){
       return alert('Geolocation is not supported by your browser.')
@@ -106,7 +109,7 @@ function Search(){
 
     return(
         <div className = 'container'>
-
+            {console.log("user", currentUser.email)}
           <Searchbar 
             onChangeHandler = {onSearchChange}
             onClickHandler = {onClickHandler}

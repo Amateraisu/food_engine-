@@ -13,14 +13,15 @@ export const AuthContextProvider = ({ children }) => {
     useEffect(() => {
         const onCall = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
-            //console.log(user, "AuthContext ran");
+            console.log(user, "AuthContext ran");
         });
-
-        onCall();
+        return () => {
+            onCall();
+        };
     }, []);
 
     return (
-        <AuthContext.Provider value={currentUser}>
+        <AuthContext.Provider value={{currentUser}}>
             {children}
         </AuthContext.Provider>
     );

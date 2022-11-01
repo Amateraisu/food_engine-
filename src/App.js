@@ -12,7 +12,7 @@ import { auth } from "./firebase";
 
 function App() {
     const { currentUser } = useContext(AuthContext);
-    console.log(currentUser, "user");
+    console.log(currentUser, "user home page app.js");
     return (
         <BrowserRouter>
             <Routes>

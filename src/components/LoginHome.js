@@ -3,10 +3,12 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
+
 import { Link, navigate, useNavigate } from "react-router-dom";
 
 const LoginHome = () => {
     const [didError, setDidError] = useState(false);
+    console.log("Login Mounted");
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -18,17 +20,14 @@ const LoginHome = () => {
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    console.log(email, "login success!");
-                    alert("Welcome back" + email)
-                    alert(email)
+                    console.log(user, "login dsuccess!");
+                    alert("Welcome back, ", email)
                     navigate("../search");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    alert(errorMessage)
                     console.log("errored");
-                    
                 });
         } catch (error) {
             setDidError(true);

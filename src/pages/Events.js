@@ -29,6 +29,7 @@ const Posts = () => {
     return (
         <div className="col-12 col-md-5 m-1 container">
             <Header />
+            
             {events.map((event) =>(
                 <EventsComponent event={event}/>
             ))}
