@@ -8,7 +8,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({});
-    //console.log("ran provider");
+    console.log("ran provider");
 
     useEffect(() => {
         const onCall = onAuthStateChanged(auth, (user) => {
@@ -21,7 +21,7 @@ export const AuthContextProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{currentUser}}>
+        <AuthContext.Provider value={{{ currentUser }}}>
             {children}
         </AuthContext.Provider>
     );
