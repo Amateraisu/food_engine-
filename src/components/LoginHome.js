@@ -3,10 +3,12 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
+
 import { Link, navigate, useNavigate } from "react-router-dom";
 
 const LoginHome = () => {
     const [didError, setDidError] = useState(false);
+    console.log("Login Mounted");
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
