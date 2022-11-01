@@ -1,41 +1,31 @@
 import React, {useState, useEffect} from 'react'
-import EventInfo from './EventInfo'
-import { doc, collection, query, where, getDocs, onSnapshot, getDoc} from "firebase/firestore";
-import { db } from "../firebase.js";
+import {Modal, Button} from "react-bootstrap"
+import {Input, Label, ModalHeader, ModalBody, ModalFooter, Form, FormGroup} from 'reactstrap'
+import "./RestaurantInfo.css";
 
 
 
+function EventsComponent(event){
 
-function EventsComponent(){
-    const [events, setEvents] = useState([]);
-    const allEventsRef = collection(db, "events");
+    const RenderEvents = (eventDetails) => {
+        return (
+            <div>
 
-    const RenderEvents = (allEventDetails) => {
-        console.log("ass")
-        if (allEventDetails == null){
-            console.log("!!!!commentsNotNull")
-            const allEvents = allEventDetails.map((eventDetails) => {
-                return (
-                    <div className="col-12 col-md-5 m-1">
-                        <div className='restaurant' >
-                        {/* <img src = {getPicture(eventDetails.restaurantDetails)}></img> */}
-                        <h3 id="restname" value={eventDetails.eventname}>{eventDetails.eventname}</h3>
-                        <p>Restaurant: {eventDetails.restaurantDetails.name}</p>
-                        {/* <p>Price Level: {eventDetails.restaurantDetails.price_level}</p>
-                        <p>Rating: {eventDetails.restaurantDetails.rating}</p> */}
-                        <p>Address: {eventDetails.restaurantDetails.vicinity}</p>
-                        {/* <RestaurantInfo restaurant = {restaurant} /> */}
-                        </div>
-                    </div>
-                )
-            })
-            return (
-                allEvents
-            )
-        }
-        else{
-            return(<div>No events for u haha</div>);
-        }
+                
+                {/* <img src = {getPicture(eventDetails.restaurantDetails)}></img> */}
+                <h3 id="restname" value={eventDetails.eventname}>{eventDetails.eventname}</h3>
+                <p>Restaurant: {eventDetails.restaurantDetails.name}</p>
+                {/* <p>Price Level: {eventDetails.restaurantDetails.price_level}</p>
+                <p>Rating: {eventDetails.restaurantDetails.rating}</p> */}
+                <p>Address: {eventDetails.restaurantDetails.vicinity}</p>
+                {/* {<RestaurantInfo restaurant = {eventDetails.restaurantDetails} />} */}
+
+            </div>
+        )
+    }
+
+    let joinEventHandler = (details) =>{
+        alert("Successfully joined: " + details)
     }
 
     const getPicture = ((restaurant) => {
@@ -45,33 +35,13 @@ function EventsComponent(){
         return pictureURL;
       });
 
-    useEffect(() => {
-    const getEvents = async () => {
-        const data = await getDocs(allEventsRef);
-        console.log(data);
-        setEvents(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-       
-    };
-
-    getEvents();
-    }, []);
 
     return(
-        <div>
-            {events.map((event) => {
-            return(
-            <div className="col-12 col-md-5 m-1">
-                <div className='restaurant' >
-                {/* <img src = {getPicture(eventDetails.restaurantDetails)}></img> */}
-                <h3 id="restname" value={event.eventname}>{event.eventname}</h3>
-                <p>Restaurant: {event.restaurantDetails.name}</p>
-                {/* <p>Price Level: {eventDetails.restaurantDetails.price_level}</p>
-                <p>Rating: {eventDetails.restaurantDetails.rating}</p> */}
-                <p>Address: {event.restaurantDetails.vicinity}</p>
-                {/* <RestaurantInfo restaurant = {restaurant} /> */}
-                </div>
-            </div>
-        )})}
+        <div className = ' restaurant'>
+            {RenderEvents(event.event)}
+                <Button variant="primary" onClick={() => joinEventHandler(event.event.eventname)}>
+                        Join Event!
+                </Button>
         </div>
     )
 
