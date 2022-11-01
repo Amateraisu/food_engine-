@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
         });
 
         onCall();
-    }, []);
+    }, [currentUser]);
 
     return (
         <AuthContext.Provider value={currentUser}>

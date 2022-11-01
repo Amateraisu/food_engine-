@@ -55,7 +55,7 @@ const LoginHome = () => {
                         <div>Forgot Password?</div>
                     </div>
                     <div className="mainOptions">
-                        <button className="login_button">Register ACC</button>
+                        <button className="login_button">REGISTER JERE</button>
                         <div className="register_button">LOGIN PAGE</div>
                         {didError && <span>An Error has occured</span>}
                     </div>

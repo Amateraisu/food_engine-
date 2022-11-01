@@ -7,6 +7,7 @@ import { Link, navigate, useNavigate } from "react-router-dom";
 
 const LoginHome = () => {
     const [didError, setDidError] = useState(false);
+    console.log("Login Mounted");
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
