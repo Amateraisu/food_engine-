@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 
 import {Modal, Button} from "react-bootstrap"
 import {Input, Label, ModalHeader, ModalBody, ModalFooter, Form, FormGroup} from 'reactstrap'
+import Select from "react-dropdown-select";
 import "react-datepicker/dist/react-datepicker.css";
 import "./RestaurantInfo.css";
 import DatePicker from 'react-datepicker';
-
+import { collection, doc, setDoc, addDoc } from "firebase/firestore"; 
+import { db } from "../firebase.js";
 
 class RestaurantInfo extends React.Component{
 
@@ -21,6 +23,7 @@ class RestaurantInfo extends React.Component{
         showEventForm: false,
         eventname: '',
         eventduration: '',
+        paxlimit: '',
         date: new Date(),
         privateEvent: false,
         restaurantDetails: this.props.restaurant,
@@ -29,12 +32,15 @@ class RestaurantInfo extends React.Component{
   }
 
   toggleRestaurant (event) {
-    console.log("fuck")
     this.setState({showRestaurantInfo: !this.state.showRestaurantInfo});
   }
 
   toggleEventForm (event) {
     this.setState({showEventForm: !this.state.showEventForm});
+  }
+
+  handleDateChange = date => {
+    this.setState({ date: date })
   }
 
 
@@ -64,11 +70,25 @@ class RestaurantInfo extends React.Component{
 
 
   handleEventSubmit = event =>{
-    this.toggleEventForm();
-    console.log("fuckkkkkk");
+    event.preventDefault();
+    
+
     console.log('Current State is: ' + JSON.stringify(this.state));
     alert('Current State is: ' + JSON.stringify(this.state));
-    event.preventDefault();
+
+    try {
+      const docRef =  addDoc(collection(db, "events"), 
+        this.state
+      );
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+
+
+    console.log("dbsaved?")
+    this.toggleEventForm();
+    
 
   }
 
@@ -122,7 +142,14 @@ class RestaurantInfo extends React.Component{
               <div id="formgroup">
                 <FormGroup Row>
                   <Label htmlFor="eventduration">Event Duration:  </Label>
-                  <Input type="text" name="eventduration" id="eventduration" value={this.state.eventduration} onChange={this.handleChange}/>
+                  <Input type="number" name="eventduration" id="eventduration" min="1" max="24" step="0.5" value={this.state.eventduration} onChange={this.handleChange}/>
+                </FormGroup>
+              </div>
+
+              <div id="formgroup">
+                <FormGroup Row>
+                  <Label htmlFor="paxlimit">Max number of members:  </Label>
+                  <Input type="number" name="paxlimit" id="paxlimit" min="1" max="24" value={this.state.paxlimit} onChange={this.handleChange}/>
                 </FormGroup>
               </div>
 
@@ -131,7 +158,7 @@ class RestaurantInfo extends React.Component{
               <div id="formgroup">
                 <FormGroup>
                   <Label>Event Date: </Label>
-                  <DatePicker showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" date={new Date()} />
+                  <DatePicker showTimeSelect dateFormat="MMMM d, yyyy h:mm aa" selected={this.state.date} onChange={this.handleDateChange} />
                 </FormGroup>
               </div>
           
