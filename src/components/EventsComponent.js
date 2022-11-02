@@ -2,10 +2,26 @@ import React, {useState, useEffect} from 'react'
 import {Modal, Button} from "react-bootstrap"
 import {Input, Label, ModalHeader, ModalBody, ModalFooter, Form, FormGroup} from 'reactstrap'
 import "./RestaurantInfo.css";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { doc, updateDoc,arrayUnion } from "firebase/firestore";
+import { db } from "../firebase.js";
 
 
 
 function EventsComponent(event){
+    const { currentUser } = useContext(AuthContext);
+    
+
+    const updateParticipant = async (emailadd) => {
+        console.log(event.event.id)
+        const eventRef = doc(db, "events", event.event.id);
+        console.log("update", emailadd)
+        await updateDoc(eventRef, {
+            participantList: arrayUnion(emailadd)
+        });
+        
+    }
 
     const RenderEvents = (eventDetails) => {
         return (
@@ -13,11 +29,14 @@ function EventsComponent(event){
 
                 
                 {/* <img src = {getPicture(eventDetails.restaurantDetails)}></img> */}
-                <h3 id="restname" value={eventDetails.eventname}>{eventDetails.eventname}</h3>
+                <h3 id="restname" value={eventDetails.eventname}>{eventDetails.eventname}  ({eventDetails.privateEvent == "true" ? "Private" : "Public"})</h3>
                 <p>Restaurant: {eventDetails.restaurantDetails.name}</p>
                 {/* <p>Price Level: {eventDetails.restaurantDetails.price_level}</p>
                 <p>Rating: {eventDetails.restaurantDetails.rating}</p> */}
                 <p>Address: {eventDetails.restaurantDetails.vicinity}</p>
+                <p>Creator: {eventDetails.eventCreator}</p>
+                <p>Capacity: {eventDetails.participantList.length}/{eventDetails.paxlimit}</p>
+                <p>Description: {eventDetails.eventdesc}</p>
                 {/* {<RestaurantInfo restaurant = {eventDetails.restaurantDetails} />} */}
 
             </div>
@@ -25,7 +44,25 @@ function EventsComponent(event){
     }
 
     let joinEventHandler = (details) =>{
-        alert("Successfully joined: " + details)
+        if(currentUser != null){
+            console.log(currentUser.email)
+            if(event.event.participantList.includes(currentUser.email)){
+                alert("You are already part of the event")
+                
+            }
+            else if(event.event.participantList.length >= event.event.paxlimit){
+                alert("Capacity already maxed, cannot join!")
+            }
+            else{
+                alert("Successfully joined: " + details.eventname)
+                updateParticipant(currentUser.email)
+            }
+            
+          }
+          else{
+            alert("You need to be logged in to join an event!");
+          }
+        
     }
 
     const getPicture = ((restaurant) => {
@@ -39,7 +76,7 @@ function EventsComponent(event){
     return(
         <div className = ' restaurant'>
             {RenderEvents(event.event)}
-                <Button variant="primary" onClick={() => joinEventHandler(event.event.eventname)}>
+                <Button variant="primary" onClick={() => joinEventHandler(event.event)}>
                         Join Event!
                 </Button>
         </div>

@@ -16,6 +16,7 @@ function RestaurantInfo(props){
   const [showRestaurantInfo, toggleRestaurant] = useState(false);
   const [showEventForm, toggleEventForm] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
+  const [isPrivate, setisPrivate] = useState(false);
   const restaurant = props.props;
 
 //do like toggleRestaurant(false)
@@ -45,6 +46,9 @@ function RestaurantInfo(props){
       alert("NOT LOGGED IN");
     }
   }
+  const handleChange = () => {
+    setisPrivate(current => !current);
+  };
 
 
   const handleEventSubmit = event =>{
@@ -57,7 +61,7 @@ function RestaurantInfo(props){
     returnJSON[event.target[2].id] = event.target[2].value;
     returnJSON["date"] = event.target[3].value;
     returnJSON[event.target[4].id] = event.target[4].value;
-    returnJSON[event.target[5].id] = event.target[4].value;
+    returnJSON[event.target[5].id] = event.target[5].value;
     returnJSON["restaurantDetails"] = restaurant;
     returnJSON["participantList"] = [currentUser.email];
     returnJSON["eventCreator"] = currentUser.email;
@@ -163,7 +167,7 @@ function RestaurantInfo(props){
               <div id="formgroup"> 
                 <FormGroup check>
                   <Label check> Private event?</Label>
-                  <Input type="checkbox" id="privateEvent" />
+                  <Input type="checkbox" id="privateEvent" value={isPrivate} onChange={handleChange}/>
                 </FormGroup>
               </div>
 

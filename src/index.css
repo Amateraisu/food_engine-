@@ -50,6 +50,21 @@ body {
   border-radius: 10px;
 }
 
+.emailList {
+  
+  background: white;
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color:black;
+  border-radius: 10px;
+  width: 45%;
+}
+
+.allemailList {
+  vertical-align: middle
+
+}
 .restaurant h3 {
   display: flex;
   align-items: center;

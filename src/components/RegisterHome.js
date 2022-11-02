@@ -20,7 +20,7 @@ const LoginHome = () => {
                 const user = userCredential.user;
                 console.log("my user", user);
                 const docRef =  setDoc(doc(db, "followingList", email), 
-                {following:[]}
+                {following:[email], follower:[email]}
                         );
                 alert(user)
                 // ...

@@ -2,6 +2,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Events from "./pages/Events";
+import Social from "./pages/Social";
 import SearchRestaurant from "./pages/SearchRestaurant";
 import "./style.scss";
 
@@ -22,6 +23,7 @@ function App() {
                     <Route path="home" element={<Home />} />
                     <Route path="events" element={<Events />} />
                     <Route path="search" element={<SearchRestaurant/>} />
+                    <Route path="social" element={<Social/>} />
                 </Route>
             </Routes>
         </BrowserRouter>
