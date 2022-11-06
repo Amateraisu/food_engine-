@@ -3,14 +3,27 @@
 ## About
 
 This project is made as part of our module, SC2006 Software Engineering
-The Food Engine:
-An intuitive and easy way to help people to find nearby restaurants and gather with other people.
+
+The Food Engine is an intuitive and easy way to help people to find nearby restaurants and gather with other people.
 
 
 ## Motivation 
 
 Have you ever been craving something, but is sacred to, or dont want to eat alone? 
 My group and I always feel this way. Usually, we just end up dabaoing the food and eat alone uh, abit sad. This inspired us to create Food Engine!
+
+## Stack
+* Node.js
+* React.js
+* Bootstrap
+* Firebase
+  * Firestore database
+  * Authentication
+* Google API
+  * Google maps
+  * Geolocation
+  * Google Places
+
 
 ## Available Scripts
 
