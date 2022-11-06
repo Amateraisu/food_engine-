@@ -3,6 +3,9 @@
 ## About
 
 This project is made as part of our module, SC2006 Software Engineering
+The Food Engine:
+An intuitive and easy way to help people to find nearby restaurants and gather with other people.
+
 
 ## Motivation 
 
