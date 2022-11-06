@@ -1,6 +1,13 @@
-# Getting Started with Create React App
+# Food Engine
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About
+
+This project is made as part of our module, SC2006 Software Engineering
+
+## Motivation 
+
+Have you ever been craving something, but is sacred to, or dont want to eat alone? 
+My group and I always feel this way. Usually, we just end up dabaoing the food and eat alone uh, abit sad. and this inspired us to create a product, to overcome this issue
 
 ## Available Scripts
 
