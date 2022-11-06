@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
 
-import { Link, navigate, useNavigate } from "react-router-dom";
+import { Link, NavLink,navigate, useNavigate } from "react-router-dom";
 
 const LoginHome = () => {
     const [didError, setDidError] = useState(false);
@@ -21,16 +21,18 @@ const LoginHome = () => {
                 .then((userCredential) => {
                     const user = userCredential.user;
                     console.log(user, "login dsuccess!");
-                    alert("Welcome back, ", email)
+                    alert("Welcome back, "+ email)
                     navigate("../search");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    console.log("errored");
+                    console.log("errored", error);
+                    alert(error)
                 });
         } catch (error) {
             setDidError(true);
+            console.log(error, "error caught");
         }
     };
     return (
@@ -59,7 +61,7 @@ const LoginHome = () => {
                     />
 
                     <div className="otherOptions">
-                        <div>Use as Guest</div>
+                        <div><NavLink to="../search">Use as Guest</NavLink></div>
                         <div >Forgot Password?</div>
                     </div>
                     <div className="mainOptions">

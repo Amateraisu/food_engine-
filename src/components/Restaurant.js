@@ -6,7 +6,7 @@ const Restaurant = ({restaurant, onClickHandler}) => {
     if(!restaurant.photos){
       return restaurant.icon;
     }
-    console.log(restaurant.photos[0].photo_reference);
+    //console.log(restaurant.photos[0].photo_reference);
     let pictureURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=PHOTOREF&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk&q";
     pictureURL = pictureURL.replace("PHOTOREF", restaurant.photos[0].photo_reference);
     return pictureURL;

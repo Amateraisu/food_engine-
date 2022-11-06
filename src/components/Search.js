@@ -45,7 +45,7 @@ function Search(){
           }
           )
       }
-      const api = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=RESTAURANT_TYPE&location=LATITUDE%2CLONGITUDE&radius=1500&type=restaurant&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk"
+      const api = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=RESTAURANT_TYPE&location=LATITUDE%2CLONGITUDE&radius=1500&type=restaurant&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk"
       if(searchField === ""){
         return;
       }
@@ -117,7 +117,7 @@ function Search(){
           <Select 
             onChangeHandler= {onFilterChange}
           />
-          {filteredRestaurants.length > 0 ? (
+          {filteredRestaurants.length >= 0 ? (
             <Restaurants 
             restaurants={filteredRestaurants} 
             onClickHandler={handleShow}

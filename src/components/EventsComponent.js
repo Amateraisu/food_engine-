@@ -25,7 +25,7 @@ function EventsComponent(event){
 
     const RenderEvents = (eventDetails) => {
         return (
-            <div>
+            <div >
 
                 
                 {/* <img src = {getPicture(eventDetails.restaurantDetails)}></img> */}
@@ -35,7 +35,7 @@ function EventsComponent(event){
                 <p>Rating: {eventDetails.restaurantDetails.rating}</p> */}
                 <p>Address: {eventDetails.restaurantDetails.vicinity}</p>
                 <p>Creator: {eventDetails.eventCreator}</p>
-                <p>Capacity: {eventDetails.participantList.length}/{eventDetails.paxlimit}</p>
+                <p >Capacity: {eventDetails.participantList.length}/{eventDetails.paxlimit}</p>
                 <p>Description: {eventDetails.eventdesc}</p>
                 {/* {<RestaurantInfo restaurant = {eventDetails.restaurantDetails} />} */}
 
@@ -65,18 +65,10 @@ function EventsComponent(event){
         
     }
 
-    const getPicture = ((restaurant) => {
-        console.log(restaurant.photos[0].photo_reference);
-        let pictureURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=PHOTOREF&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk&q";
-        pictureURL = pictureURL.replace("PHOTOREF", restaurant.photos[0].photo_reference);
-        return pictureURL;
-      });
-
-
     return(
         <div className = ' restaurant'>
             {RenderEvents(event.event)}
-                <Button variant="primary" onClick={() => joinEventHandler(event.event)}>
+                <Button variant="primary" onClick={() => joinEventHandler(event.event) } onMouseOver={() =>  console.log("Event:MouseEnter") }> 
                         Join Event!
                 </Button>
         </div>

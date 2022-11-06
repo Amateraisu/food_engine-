@@ -8,6 +8,7 @@ import { db } from "../firebase.js";
 
 const LoginHome = () => {
     const [didError, setDidError] = useState(false);
+    const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -22,7 +23,8 @@ const LoginHome = () => {
                 const docRef =  setDoc(doc(db, "followingList", email), 
                 {following:[email], follower:[email]}
                         );
-                alert(user)
+                alert("Welcome to Foodengine, " + email + "!")
+                navigate("../search");
                 // ...
             })
             .catch((error) => {

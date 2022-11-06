@@ -50,7 +50,7 @@ public class APIClient {
         String destination = "School+of+Social+Science+(SSS)";
         //URL url = new URL("https://maps.googleapis.com/maps/api/distancematrix/json?origins="+placeName+"&destinations="+destination+"&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk");
         try {
-            JSONObject googlObject = new JSONObject(readUrl("https://maps.googleapis.com/maps/api/distancematrix/json?origins="+placeName+"&destinations="+destination+"&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk"));
+            JSONObject googlObject = new JSONObject(readUrl("https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/distancematrix/json?origins="+placeName+"&destinations="+destination+"&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk"));
             JSONArray destination_addresses = (JSONArray) googlObject.get("destination_addresses");    
             System.out.println(destination_addresses);
         } catch (Exception e) {

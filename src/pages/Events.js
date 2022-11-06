@@ -19,7 +19,8 @@ const Posts = () => {
 
     const [users, setUsers] = useState([]);
     const allUsersRef = collection(db, "followingList");
-
+    
+    const allEvents = []
     const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
@@ -43,14 +44,22 @@ const Posts = () => {
     }, []);
     
     function checkPrivate(event){
+        
         if(event.privateEvent!="true"){
-            return(<EventsComponent event={event}/>)
+            console.log("PUBLIC EVENT")
+            console.log(event)
+            allEvents.push(event)
+            //return(<EventsComponent event={event}/>)
         }
         else{
+            console.log("PRIVATE EVENT")
+            console.log(event)
             for(let i = 0; i < users.length; i++){
-                console.log("HEREE", users[i].following)
+
+                //console.log("HEREE", users[i].following)
                 if(users[i].id == currentUser.email && users[i].following.includes(event.eventCreator) && users[i].follower.includes(event.eventCreator)){
-                    return(<EventsComponent event={event}/>)
+                    allEvents.push(event)
+                    //return(<EventsComponent event={event}/>)
                 }
             }
             return(<></>)
@@ -65,9 +74,13 @@ const Posts = () => {
 
             
             {console.log("users", users)}
-            {events.map((event) =>(
-                checkPrivate(event)
-            ))}
+            {events.map((event) =>(checkPrivate(event)))}
+
+            {allEvents.length==0 ? (
+                <div class="restaurant">No events now. Do consider creating one!</div>
+            ) : (allEvents.map((event) =>(<EventsComponent event={event}/>)))}
+                    
+                    
 
         </div>
     );

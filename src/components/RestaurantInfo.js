@@ -11,7 +11,7 @@ import { collection, doc, setDoc, addDoc } from "firebase/firestore";
 import { db } from "../firebase.js";
 
 function RestaurantInfo(props){
-  console.log("props", props)
+  //console.log("props", props)
   const { currentUser } = useContext(AuthContext);
   const [showRestaurantInfo, toggleRestaurant] = useState(false);
   const [showEventForm, toggleEventForm] = useState(false);
@@ -23,7 +23,7 @@ function RestaurantInfo(props){
 
   const getFrameURL = (restaurantname) =>{
     let mapURL = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk&q=" + restaurantname;
-    console.log(mapURL);
+    //console.log(mapURL);
     return mapURL;
   }
   
@@ -32,7 +32,7 @@ function RestaurantInfo(props){
       return restaurant.icon;
     }
 
-    console.log(restaurant.photos[0].photo_reference);
+    //console.log(restaurant.photos[0].photo_reference);
     let pictureURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=PHOTOREF&key=AIzaSyAKaJMO3CQcvpf2iweobZjts8qI0lOZkfk&q";
     pictureURL = pictureURL.replace("PHOTOREF", restaurant.photos[0].photo_reference);
     return pictureURL;
