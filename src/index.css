@@ -1,8 +1,23 @@
 
 
+@font-face {
+  font-family: "FredokaOne";
+  src: local("FredokaOne"),
+   url("./fonts/FredokaOne-Regular.ttf") format("truetype");
+  font-weight: bold;
+  }
+
 body {
-  margin: 0;
-  background-color: #FCF8E8;
+
+    height: 100vh;
+    background-color: rgba(217, 180, 100, 0.23);
+    font-family: FredokaOne;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+
 }
 
 
@@ -13,7 +28,7 @@ body {
   max-width: 800px;
   overflow: visible;
   padding: 30px;
-  background-color: #FCF8E8;
+  background-color: #F6EDDB;
 }
 
 .header{
@@ -35,6 +50,21 @@ body {
   border-radius: 10px;
 }
 
+.emailList {
+  
+  background: white;
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  color:black;
+  border-radius: 10px;
+  width: 45%;
+}
+
+.allemailList {
+  vertical-align: middle
+
+}
 .restaurant h3 {
   display: flex;
   align-items: center;
@@ -55,4 +85,9 @@ body {
 .underline a{
   color: ff0000;
   text-decoration: none;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
   }
