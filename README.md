@@ -2,7 +2,7 @@
 
 ## About
 
-This project is made as part of our module, SC2006 Software Engineering
+We are SC2006 group 3 and this project is made as part of our module, SC2006 Software Engineering
 
 The Food Engine is an intuitive and easy way to help people to find nearby restaurants and gather with other people.
 
@@ -24,6 +24,12 @@ My group and I always feel this way. Usually, we just end up dabaoing the food a
   * Geolocation
   * Google Places
 
+## Credits
+* Lee Bo Hua
+* Lin Kai
+* Randall Cher Jin Fong
+* Ng Wan Jing
+* Gupta Atharv
 
 ## Available Scripts
 
